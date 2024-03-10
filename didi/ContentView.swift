@@ -8,17 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    var model: didiModel
+    
+    let items = ["Apple", "Orange", "Melon"]
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List {
+                ForEach(items, id: \.self) { data in
+                    Text(data)
+                }
+            }
+            .navigationTitle("Didi")
+            Button("Add Reminder") {}
+                .buttonStyle(.borderedProminent)
         }
-        .padding()
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(model: didiModel(name: "Preview Name"))
 }
