@@ -10,51 +10,44 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
-    @Query var ideas: [ideaModel]
+    @State private var path = [ideaModel]()
+    @State private var sortOrder = SortDescriptor(\ideaModel.name)
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                List {
-                    ForEach(ideas, id: \.self) { idea in
-                        NavigationLink(value: idea) {
-                            VStack(alignment: .leading){
-                                Text(idea.name)
-                                    .font(.headline)
-                                Text(idea.date.formatted(date: .long, time: .shortened))
-                            }
+        NavigationStack(path: $path) {
+            ideaListingView(sort: sortOrder)
+                .navigationTitle("Ideas")
+                .navigationDestination(for: ideaModel.self, destination: editIdeaView.init)
+                .toolbar {
+                    Button("Sample", action: addSample)
+                    Button("Add Idea", systemImage: "plus", action: addItem)
+                    Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                        Picker("Sort", selection: $sortOrder) {
+                            Text("Name")
+                                .tag(SortDescriptor(\ideaModel.name))
+                            Text("Priority")
+                                .tag(SortDescriptor(\ideaModel.priority, order: .reverse))
+                            Text("Date")
+                                .tag(SortDescriptor(\ideaModel.date))
                         }
+                        .pickerStyle(.inline)
                     }
-                    .onDelete(perform: deleteIdea)
                 }
-                
-                Button("Add Reminder") {}
-                    .buttonStyle(.borderedProminent)
-            }
-            .navigationTitle("Ideas")
-            .navigationDestination(for: ideaModel.self, destination: editIdeaView.init)
-            .toolbar {
-                Button("Add Samples", action: addSamples)
-            }
         }
     }
     
-    func addSamples() {
-        let sample1 = ideaModel(name: "sample 1")
-        let sample2 = ideaModel(name: "sample 2")
-        let sample3 = ideaModel(name: "sample 3")
-        
+    func addItem() {
+        let item = ideaModel()
+        modelContext.insert(item)
+        path = [item]
+    }
+    
+    func addSample() {
+        let sample1 = ideaModel(name: "Catchy title", details: "with along and detailed description.", icon: "🙂")
         modelContext.insert(sample1)
-        modelContext.insert(sample2)
-        modelContext.insert(sample3)
     }
     
-    func deleteIdea(_ indexSet: IndexSet) {
-        for index in indexSet {
-            let idea = ideas[index]
-            modelContext.delete(idea)
-        }
-    }
+
 }
 
 #Preview {
