@@ -13,13 +13,25 @@ struct ideaListingView: View {
     @Query(sort: [SortDescriptor(\ideaModel.priority, order: .reverse), SortDescriptor(\ideaModel.name)]) var ideas: [ideaModel]
     
     var body: some View {
+        
         List {
             ForEach(ideas, id: \.self) { idea in
                 NavigationLink(value: idea) {
                     VStack(alignment: .leading){
-                        Text(idea.name)
-                            .font(.headline)
-                        Text(idea.date.formatted(date: .long, time: .shortened))
+                        HStack {
+                            ZStack {
+                                Text(idea.icon)
+                                    .font(.title)
+                            }
+                            Text(idea.name)
+                                .font(.headline)
+                            Spacer()
+                            Text(String(idea.priority))
+                                .font(.subheadline)
+                            Text(idea.date.formatted(date: .long, time: .shortened))
+                                .font(.footnote)
+                            
+                        }
                     }
                 }
             }

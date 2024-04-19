@@ -14,12 +14,19 @@ struct ContentView: View {
     @State private var sortOrder = SortDescriptor(\ideaModel.name)
     
     var body: some View {
+        
+        var ideaNum: Int = 1
+        
+//        let userName = NSFullUserName()
+//        let deviceName = UIDevice.current.name
+        
         NavigationStack(path: $path) {
             ideaListingView(sort: sortOrder)
-                .navigationTitle("Ideas")
+                .navigationTitle(Text(LocalizedStringKey("HEADLINE"), comment: "A flexible headline placeholder"))
                 .navigationDestination(for: ideaModel.self, destination: editIdeaView.init)
                 .toolbar {
-                    Button("Sample", action: addSample)
+                    Text("You have \(ideaNum) ideas")
+//                    Button("Sample", action: addSample)
                     Button("Add Idea", systemImage: "plus", action: addItem)
                     Menu("Sort", systemImage: "arrow.up.arrow.down") {
                         Picker("Sort", selection: $sortOrder) {
@@ -50,6 +57,12 @@ struct ContentView: View {
 
 }
 
-#Preview {
+#Preview("English") {
     ContentView()
+        .environment(\.locale, Locale(identifier: "en"))
+}
+
+#Preview("Dansk") {
+    ContentView()
+        .environment(\.locale, Locale(identifier: "da"))
 }
