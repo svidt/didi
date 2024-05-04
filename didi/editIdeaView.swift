@@ -10,24 +10,49 @@ import SwiftData
 
 struct editIdeaView: View {
     @Bindable var ideas: ideaModel
+    @State private var animatedSize = 1.0
     
     var body: some View {
-        Form {
-            TextField("Name", text: $ideas.name)
-            TextField("Details", text: $ideas.details, axis: .vertical)
-            DatePicker("Date", selection: $ideas.date)
-            
-            Section("Priority") {
-                Picker("Priority", selection: $ideas.priority) {
-                    Text("Meh").tag(1)
-                    Text("Maybe").tag(2)
-                    Text("Must").tag(3)
+        ZStack {
+            Form {
+                TextField("Name", text: $ideas.name)
+                TextField("Details", text: $ideas.details, axis: .vertical)
+                DatePicker("Date", selection: $ideas.date)
+                
+                Section("Priority") {
+                    Picker("Priority", selection: $ideas.priority) {
+                        Text("Meh").tag(1)
+                        Text("Maybe").tag(2)
+                        Text("Must").tag(3)
+                    }
+                    .pickerStyle(.segmented)
+                    HStack {
+                        Spacer()
+                        Text("😻")
+                        Spacer()
+                        Text("🙀")
+                        Spacer()
+                        Text("😽")
+                        Spacer()
+                        Text("😽")
+                        Spacer()
+                        Text("😹")
+                        Spacer()
+                    }
                 }
-                .pickerStyle(.segmented)
+            }
+            .navigationTitle("Edit Idea")
+            .navigationBarTitleDisplayMode(.inline)
+            VStack {
+                Text("\(ideas.icon)")
+                    .frame(height: 00)
+                    .scaleEffect(animatedSize)
+                    .scaledToFill()
+                    .padding()
+                    .onAppear()
+                Spacer()
             }
         }
-        .navigationTitle("Edit Idea")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

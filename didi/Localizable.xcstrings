@@ -1,6 +1,21 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@" : {
+
+    },
+    "😹" : {
+
+    },
+    "😻" : {
+
+    },
+    "😽" : {
+
+    },
+    "🙀" : {
+
+    },
     "Add Idea" : {
       "localizations" : {
         "da" : {
@@ -73,7 +88,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mon ikke"
+            "value" : "Meh"
           }
         }
       }
@@ -83,7 +98,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Må"
+            "value" : "Måst"
           }
         }
       }
@@ -130,6 +145,7 @@
       }
     },
     "You have %lld ideas" : {
+      "extractionState" : "stale",
       "localizations" : {
         "da" : {
           "variations" : {

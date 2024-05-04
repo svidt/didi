@@ -19,18 +19,19 @@ struct ideaListingView: View {
                 NavigationLink(value: idea) {
                     VStack(alignment: .leading){
                         HStack {
-                            ZStack {
-                                Text(idea.icon)
-                                    .font(.title)
-                            }
+                            Text(idea.icon)
+                                .font(.title)
                             Text(idea.name)
                                 .font(.headline)
                             Spacer()
                             Text(String(idea.priority))
                                 .font(.subheadline)
-                            Text(idea.date.formatted(date: .long, time: .shortened))
-                                .font(.footnote)
-                            
+                            VStack {
+                                Text(idea.date.formatted(date: .omitted, time: .shortened))
+                                    .bold()
+                                Text(idea.date.formatted(date: .abbreviated, time: .omitted))
+                            }
+                            .font(.footnote)
                         }
                     }
                 }
